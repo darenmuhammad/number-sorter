@@ -1,13 +1,120 @@
-# number-sorter
 
-Number() function
+# 📦 JavaScript Sorting: Algoritma Dasar & `sort()` Method
 
-Now you need to actually sort the array. The first sorting algorithm you will implement is the bubble sort, which starts at the beginning of the array and 'bubbles up' unsorted values towards the end, iterating through the array until it is completely sorted.
+Dokumentasi ini membahas beberapa algoritma sorting dasar yaitu **Bubble Sort**, **Selection Sort**, dan **Insertion Sort**, serta penggunaan bawaan JavaScript yaitu **`Array.prototype.sort()`**.
 
-Time to implement another sorting algorithm. This time, you'll be implementing a selection sort. Selection sort works by finding the smallest value in the array, then swapping it with the first value in the array. Then, it finds the next smallest value in the array, and swaps it with the second value in the array. It continues iterating through the array until it is completely sorted.
+---
 
-A selection sort relies on tracking the index of the smallest value in the array. Declare a variable minIndex and set it to i - this ensures that if your current value is the smallest, it will be swapped with itself and not be moved. You will need to be able to reassign the value of minIndex as you iterate through the array.
+## 🧮 Bubble Sort
 
-The last sorting algorithm you will implement is the insertion sort. This algorithm works by building up a sorted array at the beginning of the list. It begins the sorted array with the first element. Then it inspects the next element and swaps it backward into the sorted array until it is in a sorted position, and so on.
+Bubble Sort membandingkan dua elemen berdekatan dan menukarnya jika urutannya salah. Proses ini diulang sampai array terurut.
 
-To sort the elements of an array, you can use the built-in method called .sort(). Therefore, you can update the sortedValues variable by assigning it the result of calling .sort() on the inputValues array.
+### Ciri-ciri:
+- Sederhana, tapi lambat untuk data besar
+- Kompleksitas waktu: **O(n²)**
+
+### Contoh:
+```javascript
+function bubbleSort(arr) {
+  let n = arr.length;
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = 0; j < n - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
+}
+```
+
+---
+
+## 🟨 Selection Sort
+
+Selection Sort memilih elemen terkecil dari array dan menukarnya dengan elemen pertama, lalu kedua, dst.
+
+### Ciri-ciri:
+- Tidak efisien untuk array besar
+- Kompleksitas waktu: **O(n²)**
+
+### Contoh:
+```javascript
+function selectionSort(arr) {
+  let n = arr.length;
+  for (let i = 0; i < n; i++) {
+    let minIdx = i;
+    for (let j = i + 1; j < n; j++) {
+      if (arr[j] < arr[minIdx]) {
+        minIdx = j;
+      }
+    }
+    [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+  }
+  return arr;
+}
+```
+
+---
+
+## 🟩 Insertion Sort
+
+Insertion Sort bekerja seperti menyusun kartu, elemen dimasukkan ke posisi yang tepat satu per satu.
+
+### Ciri-ciri:
+- Cepat untuk array kecil atau hampir terurut
+- Kompleksitas waktu: **O(n²)**
+
+### Contoh:
+```javascript
+function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let current = arr[i];
+    let j = i - 1;
+    while (j >= 0 && arr[j] > current) {
+      arr[j + 1] = arr[j];
+      j--;
+    }
+    arr[j + 1] = current;
+  }
+  return arr;
+}
+```
+
+---
+
+## ⚙️ `sort()` Method (Built-in JavaScript)
+
+`sort()` adalah metode bawaan JavaScript untuk mengurutkan array.
+
+### Penting:
+- Secara default, mengurutkan elemen sebagai **string** (bukan angka).
+- Untuk angka, gunakan **compare function**.
+
+### Contoh tanpa compare function:
+```javascript
+[10, 5, 2, 100].sort(); // [10, 100, 2, 5] → Salah untuk angka
+```
+
+### Contoh dengan compare function:
+```javascript
+[10, 5, 2, 100].sort((a, b) => a - b); // [2, 5, 10, 100]
+```
+
+---
+
+## 🧠 Perbandingan Singkat
+
+| Algoritma      | Kecepatan Terbaik | Kecepatan Terburuk | Stabil? | Cocok Untuk              |
+|----------------|-------------------|---------------------|---------|---------------------------|
+| Bubble Sort    | O(n)              | O(n²)               | Ya      | Data kecil/sudah hampir urut |
+| Selection Sort | O(n²)             | O(n²)               | Tidak   | Belajar konsep dasar      |
+| Insertion Sort | O(n)              | O(n²)               | Ya      | Data hampir terurut       |
+| `sort()`       | O(n log n)        | O(n log n)          | Ya*     | Penggunaan sehari-hari    |
+
+---
+
+## 📌 Kesimpulan
+
+- Gunakan algoritma manual seperti Bubble/Selection/Insertion untuk belajar logika sorting.
+- Gunakan `sort()` dengan compare function saat bekerja dengan angka di JavaScript.
